@@ -18,26 +18,23 @@ type Variant = "home" | "history";
 export function PhoneBadgy({
   variant = "home",
   float = true,
-  scale = 1,
 }: {
   variant?: Variant;
   float?: boolean;
-  scale?: number;
 }) {
   return (
     <motion.div
       animate={float ? { y: [0, -8, 0] } : undefined}
       transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      style={{ transform: `scale(${scale})` }}
-      className="relative mx-auto"
+      className="relative mx-auto w-[210px] h-[434px] sm:w-[240px] sm:h-[496px] md:w-[270px] md:h-[558px] lg:w-[300px] lg:h-[620px]"
     >
       {/* Soft glow behind */}
       <div className="pointer-events-none absolute -inset-12 -z-10">
         <div className="absolute inset-0 rounded-[80px] bg-accent/20 blur-[80px]" />
       </div>
 
-      {/* Phone frame */}
-      <div className="relative h-[620px] w-[300px] rounded-[52px] border border-white/10 bg-gradient-to-b from-[#1a1a24] to-[#0e0e15] p-[6px] shadow-[0_30px_120px_-20px_rgba(139,92,246,0.45),0_0_0_1px_rgba(255,255,255,0.04)_inset]">
+      {/* Phone frame — fixed 300x620 scaled responsively to match wrapper above */}
+      <div className="relative origin-top-left scale-[0.7] sm:scale-[0.8] md:scale-[0.9] lg:scale-100 h-[620px] w-[300px] rounded-[52px] border border-white/10 bg-gradient-to-b from-[#1a1a24] to-[#0e0e15] p-[6px] shadow-[0_30px_120px_-20px_rgba(139,92,246,0.45),0_0_0_1px_rgba(255,255,255,0.04)_inset]">
         {/* side buttons */}
         <span className="absolute -left-[3px] top-[120px] h-16 w-[3px] rounded-l-full bg-white/10" />
         <span className="absolute -left-[3px] top-[200px] h-24 w-[3px] rounded-l-full bg-white/10" />

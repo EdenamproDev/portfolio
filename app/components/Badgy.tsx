@@ -160,9 +160,11 @@ export function Badgy() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative order-2 lg:order-1"
+            className="relative order-2 lg:order-1 overflow-hidden"
           >
-            <AdminDashboardPreview />
+            <div className="origin-top-left scale-[0.7] sm:scale-[0.85] md:scale-[0.95] lg:scale-100 -mr-[30%] sm:-mr-[15%] md:-mr-[5%] lg:mr-0 -mb-[35%] sm:-mb-[18%] md:-mb-[5%] lg:mb-0">
+              <AdminDashboardPreview />
+            </div>
           </motion.div>
 
           <motion.div
@@ -552,7 +554,7 @@ function AdminDashboardPreview() {
 function MapSpotlight() {
   return (
     <div className="relative">
-      <PhoneBadgy variant="history" float scale={0.92} />
+      <PhoneBadgy variant="history" float />
     </div>
   );
 }
