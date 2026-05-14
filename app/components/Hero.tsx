@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Download } from "lucide-react";
 import { PhoneBadgy } from "./PhoneBadgy";
 import { fadeUp, stagger } from "./Section";
@@ -8,8 +9,21 @@ import { CodeParticles } from "./CodeParticles";
 import { ScrambleText } from "./ScrambleText";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  // Apple-style parallax: phone drifts up + scales down a touch as you scroll past
+  const phoneY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const phoneScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const phoneOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.4]);
+  // Headline drifts slightly slower for cinematic depth
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   return (
     <section
+      ref={sectionRef}
       id="top"
       className="relative isolate overflow-hidden pt-32 pb-24 md:pt-44 md:pb-32"
     >
@@ -28,9 +42,12 @@ export function Hero() {
               "radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%)",
           }}
         />
-        {/* purple blob */}
-        <div className="absolute right-[-10%] top-[-10%] h-[620px] w-[620px] rounded-full bg-accent/25 blur-[140px]" />
-        <div className="absolute left-[-15%] top-[20%] h-[460px] w-[460px] rounded-full bg-accent-deep/20 blur-[140px]" />
+        {/* purple blobs — slow drift for atmospheric depth */}
+        <div className="drift-slow absolute right-[-10%] top-[-10%] h-[620px] w-[620px] rounded-full bg-accent/25 blur-[140px]" />
+        <div
+          className="drift-slow absolute left-[-15%] top-[20%] h-[460px] w-[460px] rounded-full bg-accent-deep/20 blur-[140px]"
+          style={{ animationDelay: "-7s" }}
+        />
         {/* bottom fade */}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg" />
       </div>
@@ -43,6 +60,7 @@ export function Hero() {
           variants={stagger}
           initial="hidden"
           animate="show"
+          style={{ y: textY }}
           className="relative"
         >
           <motion.div variants={fadeUp}>
@@ -73,21 +91,27 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-3">
-            <a
+            <motion.a
               href="#badgy"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-5 py-3 text-[14px] font-medium tracking-tight text-black transition-transform hover:-translate-y-0.5"
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+              className="btn-shine group relative inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[14px] font-medium tracking-tight text-black shadow-[0_8px_30px_-12px_rgba(255,255,255,0.5)]"
             >
               View Projects
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
-            <a
+              <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5" />
+            </motion.a>
+            <motion.a
               href="/cv.pdf"
               download="Eden-Amzallag-CV.pdf"
-              className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-[14px] font-medium tracking-tight text-ink transition-colors hover:bg-white/[0.07]"
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+              className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-[14px] font-medium tracking-tight text-ink transition-colors hover:border-accent/30 hover:bg-white/[0.07]"
             >
               <Download className="size-4 text-ink-muted transition-colors group-hover:text-ink" />
               Download CV
-            </a>
+            </motion.a>
           </motion.div>
 
           {/* mini meta row */}
@@ -110,12 +134,13 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right: phone */}
+        {/* Right: phone (scroll-linked parallax) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          className="relative flex items-center justify-center lg:justify-end"
+          style={{ y: phoneY, scale: phoneScale, opacity: phoneOpacity }}
+          className="relative flex items-center justify-center lg:justify-end will-change-transform"
         >
           <PhoneBadgy variant="home" />
         </motion.div>
