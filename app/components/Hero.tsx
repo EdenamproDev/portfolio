@@ -81,8 +81,8 @@ export function Hero() {
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
-              href="/cv.png"
-              download="Eden-Amzallag-CV.png"
+              href="/cv.pdf"
+              download="Eden-Amzallag-CV.pdf"
               className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-[14px] font-medium tracking-tight text-ink transition-colors hover:bg-white/[0.07]"
             >
               <Download className="size-4 text-ink-muted transition-colors group-hover:text-ink" />

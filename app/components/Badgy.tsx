@@ -513,9 +513,9 @@ function AdminDashboardPreview() {
               </div>
               <div className="divide-y divide-gray-100">
                 {[
-                  ["Sarah Lévy", "Siège Paris", "7h12", "#00B894"],
-                  ["Marc Dubois", "Bureau Lyon", "6h48", "#00B894"],
-                  ["Yael Cohen", "Siège Paris", "5h32", "#6C5CE7"],
+                  ["Sarah Levi", "Bureau Tel-Aviv", "7h12", "#00B894"],
+                  ["David Cohen", "Bureau Jérusalem", "6h48", "#00B894"],
+                  ["Yael Mizrahi", "Bureau Tel-Aviv", "5h32", "#6C5CE7"],
                 ].map(([n, s, h, c]) => (
                   <div
                     key={n}

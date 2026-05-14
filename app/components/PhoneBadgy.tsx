@@ -202,7 +202,7 @@ function HomeScreen() {
               <CheckCircle2 className="size-3 text-[#00B894]" />
             </div>
             <p className="text-[13px] font-semibold text-[#2D3436]">
-              Siège Paris
+              Bureau Tel-Aviv
             </p>
             <p className="text-[8px] font-bold uppercase tracking-wider text-[#636E72]">
               PRÉCISION GPS : 7M
