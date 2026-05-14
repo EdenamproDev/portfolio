@@ -24,6 +24,8 @@ import { PhoneBadgy } from "./PhoneBadgy";
 import { fadeUp, stagger } from "./Section";
 import { ScrambleText } from "./ScrambleText";
 import { Dissolve } from "./Dissolve";
+import { MouseSpotlight } from "./MouseSpotlight";
+import { CountUp } from "./CountUp";
 
 const features = [
   {
@@ -236,22 +238,21 @@ export function Badgy() {
                 variants={fadeUp}
                 whileHover={{ y: -2 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative bg-bg p-6 md:p-7"
+                className="group relative bg-bg"
               >
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.07] to-transparent" />
-                </div>
-                <div className="relative">
-                  <div className="mb-5 grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-accent-soft transition-colors group-hover:border-accent/40 group-hover:text-accent">
-                    <f.icon className="size-4" />
+                <MouseSpotlight className="h-full p-6 md:p-7">
+                  <div className="relative">
+                    <div className="mb-5 grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.03] text-accent-soft transition-colors group-hover:border-accent/40 group-hover:text-accent">
+                      <f.icon className="size-4" />
+                    </div>
+                    <h4 className="text-[15px] font-medium tracking-tight text-ink">
+                      {f.title}
+                    </h4>
+                    <p className="mt-2 text-[13.5px] leading-relaxed text-ink-muted">
+                      {f.desc}
+                    </p>
                   </div>
-                  <h4 className="text-[15px] font-medium tracking-tight text-ink">
-                    {f.title}
-                  </h4>
-                  <p className="mt-2 text-[13.5px] leading-relaxed text-ink-muted">
-                    {f.desc}
-                  </p>
-                </div>
+                </MouseSpotlight>
               </motion.div>
             ))}
           </motion.div>
@@ -294,20 +295,30 @@ export function Badgy() {
                 </p>
 
                 <div className="mt-8 grid grid-cols-3 gap-4 max-w-md">
-                  {[
-                    ["~5m", "Accuracy target"],
-                    ["Geo-fenced", "Per worksite"],
-                    ["Real-time", "Validation"],
-                  ].map(([v, k]) => (
-                    <div key={k} className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
-                      <p className="text-[16px] font-semibold tracking-tight text-ink">
-                        {v}
-                      </p>
-                      <p className="mt-0.5 text-[11px] uppercase tracking-wider text-ink-dim">
-                        {k}
-                      </p>
-                    </div>
-                  ))}
+                  <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
+                    <p className="text-[16px] font-semibold tracking-tight text-ink tabular-nums">
+                      <CountUp to={5} prefix="~" suffix="m" />
+                    </p>
+                    <p className="mt-0.5 text-[11px] uppercase tracking-wider text-ink-dim">
+                      Accuracy target
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
+                    <p className="text-[16px] font-semibold tracking-tight text-ink">
+                      Geo-fenced
+                    </p>
+                    <p className="mt-0.5 text-[11px] uppercase tracking-wider text-ink-dim">
+                      Per worksite
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-white/8 bg-white/[0.02] p-3">
+                    <p className="text-[16px] font-semibold tracking-tight text-ink">
+                      Real-time
+                    </p>
+                    <p className="mt-0.5 text-[11px] uppercase tracking-wider text-ink-dim">
+                      Validation
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -434,19 +445,19 @@ function AdminDashboardPreview() {
                   Vue d&apos;ensemble
                 </h3>
               </div>
-              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700 ring-1 ring-emerald-200">
-                +12% vs avril
+              <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-semibold text-emerald-700 ring-1 ring-emerald-200 tabular-nums">
+                <CountUp to={12} prefix="+" suffix="% vs avril" duration={1200} />
               </span>
             </div>
 
             {/* KPI tiles */}
             <div className="mt-4 grid grid-cols-4 gap-2.5">
-              {[
-                ["Heures", "1 248h"],
-                ["Pointages", "342"],
-                ["Retards", "11"],
-                ["Absences", "3"],
-              ].map(([k, v]) => (
+              {([
+                ["Heures", 1248, "h"],
+                ["Pointages", 342, ""],
+                ["Retards", 11, ""],
+                ["Absences", 3, ""],
+              ] as const).map(([k, v, suf]) => (
                 <div
                   key={k}
                   className="rounded-xl border border-gray-200 bg-white p-2.5"
@@ -455,7 +466,7 @@ function AdminDashboardPreview() {
                     {k}
                   </p>
                   <p className="mt-1 text-[15px] font-bold tracking-tight text-gray-900 tabular-nums">
-                    {v}
+                    <CountUp to={v} suffix={suf} />
                   </p>
                 </div>
               ))}
@@ -467,8 +478,8 @@ function AdminDashboardPreview() {
                 <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
                   Heures · 4 dernières semaines
                 </p>
-                <p className="text-[9px] font-semibold text-gray-500">
-                  Cumul 312h
+                <p className="text-[9px] font-semibold text-gray-500 tabular-nums">
+                  Cumul <CountUp to={312} suffix="h" />
                 </p>
               </div>
               <svg viewBox="0 0 320 60" className="mt-2 block h-14 w-full">
@@ -509,8 +520,8 @@ function AdminDashboardPreview() {
                 <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
                   Opérateurs · aujourd&apos;hui
                 </p>
-                <p className="text-[9px] font-semibold text-gray-500">
-                  18 actifs
+                <p className="text-[9px] font-semibold text-gray-500 tabular-nums">
+                  <CountUp to={18} suffix=" actifs" />
                 </p>
               </div>
               <div className="divide-y divide-gray-100">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { MagneticLink } from "./MagneticLink";
 
 const links = [
   { href: "#about", label: "About" },
@@ -55,15 +56,16 @@ export function Nav() {
             ))}
           </nav>
 
-          <a
+          <MagneticLink
             href="#contact"
-            className="group relative inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-white/[0.07]"
+            strength={0.35}
+            className="group relative inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[13px] font-medium text-ink transition-colors hover:border-accent/30 hover:bg-white/[0.07]"
           >
             Get in touch
             <span className="text-ink-muted transition-transform group-hover:translate-x-0.5">
               →
             </span>
-          </a>
+          </MagneticLink>
         </div>
       </motion.div>
     </motion.header>

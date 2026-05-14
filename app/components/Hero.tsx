@@ -7,6 +7,7 @@ import { PhoneBadgy } from "./PhoneBadgy";
 import { fadeUp, stagger } from "./Section";
 import { CodeParticles } from "./CodeParticles";
 import { ScrambleText } from "./ScrambleText";
+import { MagneticLink } from "./MagneticLink";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -91,27 +92,23 @@ export function Hero() {
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap items-center gap-3">
-            <motion.a
+            <MagneticLink
               href="#badgy"
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+              strength={0.4}
               className="btn-shine group relative inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[14px] font-medium tracking-tight text-black shadow-[0_8px_30px_-12px_rgba(255,255,255,0.5)]"
             >
               View Projects
               <ArrowRight className="size-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5" />
-            </motion.a>
-            <motion.a
+            </MagneticLink>
+            <MagneticLink
               href="/cv.pdf"
               download="Eden-Amzallag-CV.pdf"
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+              strength={0.3}
               className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-[14px] font-medium tracking-tight text-ink transition-colors hover:border-accent/30 hover:bg-white/[0.07]"
             >
               <Download className="size-4 text-ink-muted transition-colors group-hover:text-ink" />
               Download CV
-            </motion.a>
+            </MagneticLink>
           </motion.div>
 
           {/* mini meta row */}
